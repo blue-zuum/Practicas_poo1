@@ -10,8 +10,9 @@ package poo_6;
  */
 class HistorialUsuario {
     String id, rol, funcionalidad, razon, criterio, contexto, evento, resultadoEsperado;
+
     public HistorialUsuario(String id, String rol, String funcionalidad, String razon,
-                           String criterio, String contexto, String evento, String resultadoEsperado) {
+                            String criterio, String contexto, String evento, String resultadoEsperado) {
         this.id = id;
         this.rol = rol;
         this.funcionalidad = funcionalidad;
@@ -21,6 +22,12 @@ class HistorialUsuario {
         this.evento = evento;
         this.resultadoEsperado = resultadoEsperado;
     }
+
+    public HistorialUsuario(String id, String rol, String funcionalidad) {
+        this(id, rol, funcionalidad, "N/A", "N/A", "N/A", "N/A", "N/A");
+    }
+
+    // Método imprimir completo
     public void imprimir() {
         System.out.println("Identificador: " + id);
         System.out.println("Rol: " + rol);
@@ -31,5 +38,13 @@ class HistorialUsuario {
         System.out.println("Evento: " + evento);
         System.out.println("Resultado esperado: " + resultadoEsperado);
         System.out.println("--------------------------");
+    }
+
+    public void imprimir(boolean simple) {
+        if (simple) {
+            System.out.println("ID: " + id + " | Rol: " + rol + " | Funcionalidad: " + funcionalidad);
+        } else {
+            imprimir();
+        }
     }
 }
