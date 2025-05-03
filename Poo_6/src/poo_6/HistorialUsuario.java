@@ -3,58 +3,55 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package poo_6;
-
+import java.util.ArrayList;
 /**
  *
  * @author PC
  */
 public class HistorialUsuario {
-    private String[] historial;
-    private int contador;
+    private String nombre;
+    private ArrayList<String> historial;
 
-    public HistorialUsuario() {
-        historial = new String[10];
-        contador = 0;
+    // Constructor
+    public HistorialUsuario(String nombre) {
+        this.nombre = nombre;
+        this.historial = new ArrayList<>();
     }
 
-    public void agregarAlHistorial(String entrada) {
-        try {
-            if (contador >= historial.length) {
-                throw new ArrayIndexOutOfBoundsException("Historial lleno. No se puede agregar más.");
-            }
-            historial[contador] = entrada;
-            contador++;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+    // Método para agregar una entrada al historial
+    public void agregarEntrada(String entrada) {
+        historial.add(entrada);
+        System.out.println("Entrada agregada: " + entrada);
     }
 
+    // Método sobrecargado para agregar múltiples entradas
+    public void agregarEntrada(ArrayList<String> entradas) {
+        historial.addAll(entradas);
+        System.out.println("Entradas agregadas: " + entradas.size());
+    }
+
+    // Mostrar historial
     public void mostrarHistorial() {
-        try {
-            if (contador == 0) {
-                throw new Exception("El historial está vacío.");
+        System.out.println("Historial de " + nombre + ":");
+        if (historial.isEmpty()) {
+            System.out.println("No hay entradas en el historial.");
+        } else {
+            for (String entrada : historial) {
+                System.out.println("- " + entrada);
             }
-            System.out.println("Historial:");
-            for (int i = 0; i < contador; i++) {
-                System.out.println((i + 1) + ". " + historial[i]);
-            }
-        } catch (Exception e) {
-            System.out.println("Error al mostrar historial: " + e.getMessage());
         }
     }
 
-    // Sobrecarga: mostrar solo cierta cantidad de elementos
-    public void mostrarHistorial(int cantidad) {
-        try {
-            if (cantidad > contador) {
-                throw new IllegalArgumentException("Cantidad mayor que el tamaño del historial.");
-            }
-            System.out.println("Mostrando los últimos " + cantidad + " elementos:");
-            for (int i = contador - cantidad; i < contador; i++) {
-                System.out.println((i + 1) + ". " + historial[i]);
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+    public static void main(String[] args) {
+        HistorialUsuario usuario = new HistorialUsuario("Ana");
+        usuario.agregarEntrada("Inicio de sesión");
+        usuario.agregarEntrada("Consultó su saldo");
+
+        ArrayList<String> nuevasEntradas = new ArrayList<>();
+        nuevasEntradas.add("Realizó un pago");
+        nuevasEntradas.add("Cerró sesión");
+
+        usuario.agregarEntrada(nuevasEntradas);
+        usuario.mostrarHistorial();
     }
 }
