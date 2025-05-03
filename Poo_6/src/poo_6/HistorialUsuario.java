@@ -8,43 +8,53 @@ package poo_6;
  *
  * @author PC
  */
-class HistorialUsuario {
-    String id, rol, funcionalidad, razon, criterio, contexto, evento, resultadoEsperado;
+public class HistorialUsuario {
+    private String[] historial;
+    private int contador;
 
-    public HistorialUsuario(String id, String rol, String funcionalidad, String razon,
-                            String criterio, String contexto, String evento, String resultadoEsperado) {
-        this.id = id;
-        this.rol = rol;
-        this.funcionalidad = funcionalidad;
-        this.razon = razon;
-        this.criterio = criterio;
-        this.contexto = contexto;
-        this.evento = evento;
-        this.resultadoEsperado = resultadoEsperado;
+    public HistorialUsuario() {
+        historial = new String[10];
+        contador = 0;
     }
 
-    public HistorialUsuario(String id, String rol, String funcionalidad) {
-        this(id, rol, funcionalidad, "N/A", "N/A", "N/A", "N/A", "N/A");
+    public void agregarAlHistorial(String entrada) {
+        try {
+            if (contador >= historial.length) {
+                throw new ArrayIndexOutOfBoundsException("Historial lleno. No se puede agregar más.");
+            }
+            historial[contador] = entrada;
+            contador++;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
-    // Método imprimir completo
-    public void imprimir() {
-        System.out.println("Identificador: " + id);
-        System.out.println("Rol: " + rol);
-        System.out.println("Funcionalidad: " + funcionalidad);
-        System.out.println("Razón: " + razon);
-        System.out.println("Criterio: " + criterio);
-        System.out.println("Contexto: " + contexto);
-        System.out.println("Evento: " + evento);
-        System.out.println("Resultado esperado: " + resultadoEsperado);
-        System.out.println("--------------------------");
+    public void mostrarHistorial() {
+        try {
+            if (contador == 0) {
+                throw new Exception("El historial está vacío.");
+            }
+            System.out.println("Historial:");
+            for (int i = 0; i < contador; i++) {
+                System.out.println((i + 1) + ". " + historial[i]);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al mostrar historial: " + e.getMessage());
+        }
     }
 
-    public void imprimir(boolean simple) {
-        if (simple) {
-            System.out.println("ID: " + id + " | Rol: " + rol + " | Funcionalidad: " + funcionalidad);
-        } else {
-            imprimir();
+    // Sobrecarga: mostrar solo cierta cantidad de elementos
+    public void mostrarHistorial(int cantidad) {
+        try {
+            if (cantidad > contador) {
+                throw new IllegalArgumentException("Cantidad mayor que el tamaño del historial.");
+            }
+            System.out.println("Mostrando los últimos " + cantidad + " elementos:");
+            for (int i = contador - cantidad; i < contador; i++) {
+                System.out.println((i + 1) + ". " + historial[i]);
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
